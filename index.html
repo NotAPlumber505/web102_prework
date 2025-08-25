@@ -13,6 +13,16 @@
         <h1 class="header-text">Sea Monster Crowdfunding</h1>
     </div>
 
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#our-games">Our Games</a></li>
+            <li><a href="#description-container">Stats</a></li>
+        </ul>
+        <button id="dark-mode-toggle">🌙 Dark Mode</button>
+    </nav>
+
     <!-- background info about company -->
     <h2>Welcome to Sea Monster!</h2>
     <div id="description-container">
@@ -48,16 +58,20 @@
     </div>
 
     <!-- list of games funded by Sea Monster -->
-    <h2>Our Games</h2>
+    <h2 id="our-games">Our Games</h2>
     <p>Check out each of our games below!</p>
     <div id="button-container">
         <button id="unfunded-btn">Show Unfunded Only</button>
         <button id="funded-btn">Show Funded Only</button>
         <button id="all-btn">Show All Games</button>
     </div>
-    <div id="games-container">
+    <div id="games-container"></div>
 
-    </div>
+    <!-- FOOTER -->
+     <footer class="footer">
+        <img id="footer-logo" src="assets/tentacles.png" alt="Sea Monster Logo">
+        <p>© 2025 Sea Monster Crowdfunding</p>
+     </footer>
 
     <script type="module" src="index.js"></script>
   </body>

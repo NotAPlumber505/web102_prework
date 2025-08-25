@@ -17,6 +17,42 @@ function deleteChildElements(parent) {
     }
 }
 
+// Dark Mode Toggle
+const darkModeBtn = document.getElementById("dark-mode-toggle");
+darkModeBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    darkModeBtn.textContent = document.body.classList.contains("dark-mode")
+        ? "☀️ Light Mode"
+        : "🌙 Dark Mode";
+});
+
+// Game card fade-in animation
+const cards = document.querySelectorAll('.game-card');
+
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('show'); // Trigger fade-in
+            observer.unobserve(entry.target); // Reveal only once
+        }
+    });
+}, { threshold: 0.2 });
+
+cards.forEach(card => observer.observe(card));
+
+function filterGames(category) {
+    const cards = document.querySelectorAll('.game-card');
+    cards.forEach(card => {
+        if (category === 'all' || card.dataset.category === category) {
+            card.style.display = 'block';
+            setTimeout(() => card.classList.add('show'), 50); // Smooth fade
+        } else {
+            card.classList.remove('show');
+            setTimeout(() => card.style.display = 'none', 600); // Wait for fade-out
+        }
+    });
+}
+
 /*****************************************************************************
  * Challenge 3: Add data about each game as a card to the games-container
  * Skills used: DOM manipulation, for loops, template literals, functions
@@ -29,27 +65,45 @@ const gamesContainer = document.getElementById("games-container");
 function addGamesToPage(games) {
 
     // loop over each item in the data
-
+    for (let i = 0; i < games.length; i++) {
 
         // create a new div element, which will become the game card
-
+        const gameCard = document.createElement("div");
 
         // add the class game-card to the list
-
+        gameCard.classList.add("game-card");
 
         // set the inner HTML using a template literal to display some info 
         // about each game
         // TIP: if your images are not displaying, make sure there is space
         // between the end of the src attribute and the end of the tag ("/>")
 
+        gameCard.innerHTML = `
+            <img class="game-img" src ="${games[i].img}" />
+            <h3>${games[i].name}</h3>
+            <p>${games[i].description}</p>
+            <p><strong>Pledged:</strong> $${games[i].pledged.toLocaleString()}</p>
+            <p><strong>Goal:</strong> $${games[i].goal.toLocaleString()}</p>
+            <p><strong>Backers:</strong> ${games[i].backers.toLocaleString()}</p>
+            `;
 
         // append the game to the games-container
+        gamesContainer.appendChild(gameCard);
+
+        // Observe for scroll-based fade-in
+        observer.observe(gameCard);
+
+        // Fade-in effect
+        setTimeout(() => {
+            gameCard.classList.add("visible");
+        }, 50 * i);
+    }
 
 }
 
 // call the function we just defined using the correct variable
 // later, we'll call this function using a different list of games
-
+addGamesToPage(GAMES_JSON);
 
 /*************************************************************************************
  * Challenge 4: Create the summary statistics at the top of the page displaying the
@@ -61,20 +115,27 @@ function addGamesToPage(games) {
 const contributionsCard = document.getElementById("num-contributions");
 
 // use reduce() to count the number of total contributions by summing the backers
-
+const totalContributions = GAMES_JSON.reduce( (acc, game) => {
+    return acc + game.backers;
+}, 0);
 
 // set the inner HTML using a template literal and toLocaleString to get a number with commas
-
+contributionsCard.innerHTML = `<p>${totalContributions.toLocaleString()}</p>`;
 
 // grab the amount raised card, then use reduce() to find the total amount raised
 const raisedCard = document.getElementById("total-raised");
 
-// set inner HTML using template literal
+const totalRaised = GAMES_JSON.reduce( (acc, game) => {
+    return acc + game.pledged;
+}, 0);
 
+// set inner HTML using template literal
+raisedCard.innerHTML = `<p style=color:green;>$${totalRaised.toLocaleString()}</p>`;
 
 // grab number of games card and set its inner HTML
 const gamesCard = document.getElementById("num-games");
 
+gamesCard.innerHTML = `<p>${GAMES_JSON.length}</p>`;
 
 /*************************************************************************************
  * Challenge 5: Add functions to filter the funded and unfunded games
@@ -87,9 +148,12 @@ function filterUnfundedOnly() {
     deleteChildElements(gamesContainer);
 
     // use filter() to get a list of games that have not yet met their goal
-
+    let listOfUnfundedGames = GAMES_JSON.filter( (game) => {
+        return game.pledged < game.goal;
+    });
 
     // use the function we previously created to add the unfunded games to the DOM
+    addGamesToPage(listOfUnfundedGames);
 
 }
 
@@ -98,10 +162,12 @@ function filterFundedOnly() {
     deleteChildElements(gamesContainer);
 
     // use filter() to get a list of games that have met or exceeded their goal
-
+    let listOfFundedGames = GAMES_JSON.filter( (game) => {
+        return game.pledged >= game.goal;
+    });
 
     // use the function we previously created to add unfunded games to the DOM
-
+    addGamesToPage(listOfFundedGames);
 }
 
 // show all games
@@ -109,7 +175,7 @@ function showAllGames() {
     deleteChildElements(gamesContainer);
 
     // add all games from the JSON data to the DOM
-
+    addGamesToPage(GAMES_JSON);
 }
 
 // select each button in the "Our Games" section
@@ -119,6 +185,9 @@ const allBtn = document.getElementById("all-btn");
 
 // add event listeners with the correct functions to each button
 
+unfundedBtn.addEventListener("click", filterUnfundedOnly);
+fundedBtn.addEventListener("click", filterFundedOnly);
+allBtn.addEventListener("click", showAllGames);
 
 /*************************************************************************************
  * Challenge 6: Add more information at the top of the page about the company.
@@ -129,12 +198,21 @@ const allBtn = document.getElementById("all-btn");
 const descriptionContainer = document.getElementById("description-container");
 
 // use filter or reduce to count the number of unfunded games
-
+let totalUnfundedGames = GAMES_JSON.reduce( (acc, game) => {
+    return game.pledged < game.goal ? acc + 1 : acc
+}, 0);
 
 // create a string that explains the number of unfunded games using the ternary operator
-
+let fundingOverviewStr = `A total of $${totalRaised.toLocaleString()} has been raised for ${GAMES_JSON.length}
+                        ${GAMES_JSON.length === 1 ? 'game' : 'games'}.
+                        Currently, ${totalUnfundedGames} 
+                        ${totalUnfundedGames === 1 ? 'game remains' : 'games remain'} 
+                        unfunded. We need your help to fund these amazing games!`;
 
 // create a new DOM element containing the template string and append it to the description container
+const descriptionElement = document.createElement("p");
+descriptionElement.textContent = fundingOverviewStr;
+descriptionContainer.appendChild(descriptionElement);
 
 /************************************************************************************
  * Challenge 7: Select & display the top 2 games
@@ -149,7 +227,26 @@ const sortedGames =  GAMES_JSON.sort( (item1, item2) => {
 });
 
 // use destructuring and the spread operator to grab the first and second games
+const [firstGame, secondGame, ...rest] = sortedGames;
 
 // create a new element to hold the name of the top pledge game, then append it to the correct element
 
+const firstGameElement = document.createElement("p");
+firstGameElement.textContent = `${firstGame.name}`;
+firstGameContainer.appendChild(firstGameElement);
+
 // do the same for the runner up item
+
+const secondGameElement = document.createElement("p");
+secondGameElement.textContent = `${secondGame.name}`;
+secondGameContainer.appendChild(secondGameElement);
+
+// Add shrink effect on scroll
+window.addEventListener("scroll", () => {
+    const navbar = document.querySelector(".navbar");
+    if (window.scrollY > 50) {
+        navbar.classList.add("shrink");
+    } else {
+        navbar.classList.remove("shrink");
+    }
+});

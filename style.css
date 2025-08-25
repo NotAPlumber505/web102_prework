@@ -2,7 +2,8 @@
 
 body {
     font-family: 'Cabin';
-    background-color: #758190;
+    background-color: #86a4c7;
+    margin-top: 150px; /* Prevent content from being hidden under navbar */
 }
 
 #tentacles {
@@ -21,10 +22,18 @@ body {
 
 .stats-container {
     display: flex;
+    /* Added rules (for flexbox) */
+    flex-direction: row; 
+    align-items: center;
+}
+
+.stats-container:hover {
+    cursor: pointer;
+    box-shadow: 0 0 30px lightblue;
 }
 
 .stats-card {
-    background-color: #a8b0bc;
+    background-color: #a6c0e9;
     border-radius: 7px;
     padding: 1%;
     margin: 1%;
@@ -48,13 +57,23 @@ body {
     box-shadow: 0 0 10px #FFFFFF;
 }
 
+/* Initial hidden state */
 .game-card {
-    background-color: #FFFFFF;
+    background-color: #a6c0e9;
     padding: 1%;
     margin: 1%;
     width: 300px;
     text-align: center;
     border-radius: 7px;
+    opacity: 0; /* Start hidden */
+    transform: translateY(20px); /* Slightly pushed down */
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Visible state */
+.game-card.show {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .game-card:hover {
@@ -71,5 +90,153 @@ button {
     border: none;
     padding: 1%;
     margin: 1%;
-    border-radius: 7px;
+    border-radius: 20px;
+    background-color: #a6c0e9;
+}
+
+button:hover {
+    cursor: pointer;
+    box-shadow: 0 0 30px lightblue;
+}
+
+button:active {
+    background-color: navy;
+    color: white;
+}
+
+/* NAVBAR STYLING */
+.navbar {
+    background-color: #a6c0e9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.navbar li {
+    margin: 0 15px;
+}
+
+.navbar a {
+    text-decoration: none;
+    font-weight: bold;
+    color: navy;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+    color: white;
+    text-shadow: 0 0 5px lightblue;
+}
+
+.navbar.shrink {
+    padding: 5px 20px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+/* DARK MODE STYLING */
+.dark-mode {
+    background-color: #001f3f; 
+    color: #ffffff;
+}
+
+.dark-mode .header {
+    background-color: #002b5c;
+}
+
+.dark-mode .header-text {
+    color: #ffffff;
+}
+
+.dark-mode .stats-card,
+.dark-mode .game-card {
+    background-color: #003366;
+    color: #ffffff;
+    box-shadow: 0 0 10px #002b5c;
+}
+
+.dark-mode button {
+    background-color: #003366;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+}
+
+.dark-mode button:hover {
+    background-color: #ffffff;
+    color: #001f3f;
+}
+
+.dark-mode .footer {
+    background-color: #002b5c;
+    color: #ffffff;
+}
+
+.dark-mode .navbar {
+    background-color: #1f2937;
+}
+
+.dark-mode .navbar a {
+    color: #f3f4f6;
+}
+
+.dark-mode #dark-mode-toggle {
+    border-color: #f3f4f6;
+    color: #f3f4f6;
+}
+
+.dark-mode #dark-mode-toggle:hover {
+    background-color: #f3f4f6;
+    color: #1f2937;
+}
+
+.dark-mode .game-card:hover {
+    box-shadow: 0 0 30px lightblue;
+}
+
+/* Dark Mode Button */
+#dark-mode-toggle {
+    background-color: transparent;
+    border: 2px solid navy;
+    border-radius: 20px;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    color: navy;
+    transition: all 0.3s ease;
+}
+
+#dark-mode-toggle:hover {
+    background-color: navy;
+    color: white;
+}
+
+/* FOOTER STYLING */
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: lightblue;
+    padding: 15px;
+    margin-top: 40px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.footer img {
+    width: 40px;
+    margin-right: 10px;
 }
