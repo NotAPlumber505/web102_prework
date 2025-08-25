@@ -1,32 +1,34 @@
-# WEB102 Prework - *Name of App Here*
+# WEB102 Prework - *Deep Dive Devs*
 
-Submitted by: **Your Name Here**
+Submitted by: **Mario I. Casas**
 
-**Name of your app** is a website for the company Sea Monster Crowdfunding that displays information about the games they have funded.
+**Deep Dive Devs** is a website for the company Sea Monster Crowdfunding that displays information about the games they have funded.
 
-Time spent: **X** hours spent in total
+Time spent: **4** hours spent in total
 
 ## Required Features
 
 The following **required** functionality is completed:
 
-* [ ] The introduction section explains the background of the company and how many games remain unfunded.
-* [ ] The Stats section includes information about the total contributions and dollars raised as well as the top two most funded games.
-* [ ] The Our Games section initially displays all games funded by Sea Monster Crowdfunding
-* [ ] The Our Games section has three buttons that allow the user to display only unfunded games, only funded games, or all games.
+* [X] The introduction section explains the background of the company and how many games remain unfunded.
+* [X] The Stats section includes information about the total contributions and dollars raised as well as the top two most funded games.
+* [X] The Our Games section initially displays all games funded by Sea Monster Crowdfunding
+* [X] The Our Games section has three buttons that allow the user to display only unfunded games, only funded games, or all games.
 
 The following **optional** features are implemented:
 
-* [ ] List anything else that you can get done to improve the app functionality!
+* [X] Added navbar for home, stats, and games
+* [X] Added fade-in animations for game cards
+* [X] Added dark mode  
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented features:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExd3o4dW9yd2l5b3oyejY2aW05YWUxdGxiZG9idTRsZnVneHFpbDY3dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/hH51Pm7dFKbw77Rzy4/giphy.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 <!-- Replace this with whatever GIF tool you used! -->
-GIF created with ...  
+GIF created with Open Broadcaster Software (OBS) 
 <!-- Recommended tools:
 [Kap](https://getkap.co/) for macOS
 [ScreenToGif](https://www.screentogif.com/) for Windows
@@ -34,11 +36,11 @@ GIF created with ...
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+Some challenges I encountered while creating this app was remembering how to use certain aspects of JavaScript syntax (i.e., manipulating DOM elements and innerHTML), but learning about new aspects of JavaScript syntax (e.g., spread operator, destructuring, filter and reduce functions) are fascinating and immensely useful tools that I plan to utilize on my future as well as in this course!
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright [2025] [Mario I. Casas]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
